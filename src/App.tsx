@@ -1,13 +1,22 @@
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Main from "./views/Main";
+import Layout from "./layouts/Layout";
+import LoginView from "./views/LoginView";
+import RegiserView from "./views/RegisterView";
+import RecoverPasswordView from "./views/RecoverPasswordView";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route element={<Layout />}>
+            <Route path="/login" element={<LoginView />} />
+            <Route path="/registro" element={<RegiserView />} />
+            <Route
+              path="/recuperar_contraseña"
+              element={<RecoverPasswordView />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
