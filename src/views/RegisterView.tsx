@@ -14,7 +14,7 @@ const RegiserView = () => {
       </h1>
       <h2 className=" text-center text-2xl font-extrabold">Crear Cuenta</h2>
 
-      <div className=" mt-8 mx-auto max-w-md">
+      <div className=" mt-8 mx-auto max-w-md mb-[200px]">
         <div className=" bg-white py-8 px-4 shadow rounded-lg">
           <RegisterForm />
           <NavBtn
