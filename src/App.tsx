@@ -3,6 +3,7 @@ import Layout from "./layouts/Layout";
 import LoginView from "./views/LoginView";
 import RegiserView from "./views/RegisterView";
 import RecoverPasswordView from "./views/RecoverPasswordView";
+import ResultAcountView from "./views/ResultAcountView";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
               element={<RecoverPasswordView />}
             />
           </Route>
+
+          <Route path="/confirmacion/:token" element={<ResultAcountView />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AxiosError } from "axios";
+import loadingGif from "../../public/loading_gif.gif";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -14,6 +15,8 @@ const RegisterForm = () => {
     password: "",
     repetirPassword: "",
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -91,6 +94,7 @@ const RegisterForm = () => {
       password &&
       repetirPassword
     ) {
+      setIsLoading(true);
       try {
         const { data } = await axios.post(
           `${import.meta.env.VITE_SERVER_URL}/auth/registro`,
@@ -104,6 +108,7 @@ const RegisterForm = () => {
         Swal.fire({
           title: data,
           icon: "success",
+          text: "Hemos enviado un Email de confirmacion a tu correo",
         });
       } catch (error) {
         if (error instanceof AxiosError) {
@@ -112,6 +117,8 @@ const RegisterForm = () => {
             title: error.response?.data,
           });
         }
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -207,9 +214,10 @@ const RegisterForm = () => {
       )}
 
       <input
+        style={isLoading ? { display: "none" } : { display: "block" }}
         className="w-full rounded-lg py-3 shadow-2xl text-white font-bold cursor-pointer bg-indigo-600 transition-all duration-[.8s] ease-out hover:bg-indigo-800 hover:scale-105"
         type="submit"
-        value="Crear Cuenta"
+        value={isLoading ? "Cargando..." : "Crear Cuenta"}
         disabled={
           !!errors.name ||
           !!errors.email ||
@@ -217,6 +225,15 @@ const RegisterForm = () => {
           !!errors.repetirPassword
         }
       />
+      {isLoading && (
+        <div className=" flex justify-center">
+          <img
+            src={loadingGif}
+            alt="loading_gif"
+            className="h-[48px] w-[400px]  "
+          />
+        </div>
+      )}
     </form>
   );
 };
