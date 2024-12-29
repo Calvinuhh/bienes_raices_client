@@ -22,9 +22,7 @@ function App() {
 
           <Route path="/confirmacion/:token" element={<ResultAcountView />} />
 
-          <Route
-            path="/cambiar_password/:token"
-            element={<ChangePasswordForm />}
+          <Route path="/cambiar_password/:token" element={<ChangePasswordForm />}
           />
         </Routes>
       </BrowserRouter>

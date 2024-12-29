@@ -1,20 +1,42 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
-import { AxiosError } from "axios";
 import loadingGif from "../../public/loading_gif.gif";
 
 const ChangePasswordForm = () => {
   const { token } = useParams();
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [repetirPassword, setRepetirPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [responseToken, setResponseToken] = useState("");
 
   const [errors, setErrors] = useState({
     password: "",
     repetirPassword: "",
   });
+
+  useEffect(() => {
+    const validateToken = async () => {
+      setIsLoading(true);
+      try {
+        const { data } = await axios(
+          `${import.meta.env.VITE_SERVER_URL}/auth/cambiar_password/${token}`
+        );
+
+        setResponseToken(data);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          navigate("/recuperar_password", { replace: true });
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    validateToken();
+  }, [token, navigate]);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -60,23 +82,26 @@ const ChangePasswordForm = () => {
     ) {
       setIsLoading(true);
       try {
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_SERVER_URL}/auth/registro`,
+        const { data } = await axios.patch(
+          `${import.meta.env.VITE_SERVER_URL}/auth/cambiar_password`,
           {
             password,
             repetir_password: repetirPassword,
+            token: responseToken,
           }
         );
         Swal.fire({
           title: data,
           icon: "success",
-          text: "Hemos enviado un Email de confirmacion a tu correo",
+          text: "La contraseña se ha cambiado correctamente",
         });
+        navigate("/login", { replace: true });
       } catch (error) {
         if (error instanceof AxiosError) {
           Swal.fire({
             icon: "error",
-            title: error.response?.data,
+            title: "Error",
+            text: error.response?.data,
           });
         }
       } finally {
@@ -86,16 +111,16 @@ const ChangePasswordForm = () => {
   };
 
   return (
-    <div className=" py-10">
-      <h1 className=" text-center text-4xl font-extrabold my-10">
-        Bienes<span className=" font-normal">Raices</span>
+    <div className="py-10">
+      <h1 className="text-center text-4xl font-extrabold my-10">
+        Bienes<span className="font-normal">Raices</span>
       </h1>
-      <h2 className=" text-center text-2xl font-extrabold">
+      <h2 className="text-center text-2xl font-extrabold">
         Cambiar contraseña
       </h2>
 
-      <div className=" mt-8 mx-auto max-w-md mb-[200px]">
-        <div className=" bg-white py-8 px-4 shadow rounded-lg">
+      <div className="mt-8 mx-auto max-w-md mb-[200px]">
+        <div className="bg-white py-8 px-4 shadow rounded-lg">
           <form onSubmit={handleSubmit} className="space-y-5">
             <label
               htmlFor="password"
@@ -112,8 +137,8 @@ const ChangePasswordForm = () => {
               placeholder="Tu contraseña"
             />
             {errors.password && (
-              <div className=" flex p-2 bg-red-500 h-[50px] items-center justify-center rounded-md ">
-                <p className=" text-sm text-white font-semibold text-center ">
+              <div className="flex p-2 bg-red-500 h-[50px] items-center justify-center rounded-md">
+                <p className="text-sm text-white font-semibold text-center">
                   {errors.password}
                 </p>
               </div>
@@ -134,8 +159,8 @@ const ChangePasswordForm = () => {
               placeholder="Repite tu contraseña"
             />
             {errors.repetirPassword && (
-              <div className=" flex p-2 bg-red-500 h-[50px] items-center justify-center rounded-md ">
-                <p className=" text-sm text-white font-semibold text-center ">
+              <div className="flex p-2 bg-red-500 h-[50px] items-center justify-center rounded-md">
+                <p className="text-sm text-white font-semibold text-center">
                   {errors.repetirPassword}
                 </p>
               </div>
@@ -145,15 +170,17 @@ const ChangePasswordForm = () => {
               style={isLoading ? { display: "none" } : { display: "block" }}
               className="w-full rounded-lg py-3 shadow-2xl text-white font-bold cursor-pointer bg-indigo-600 transition-all duration-[.8s] ease-out hover:bg-indigo-800 hover:scale-105"
               type="submit"
-              value={isLoading ? "Cambiando contraseña..." : "Crear Cuenta"}
+              value={
+                isLoading ? "Cambiando contraseña..." : "Cambiar contraseña"
+              }
               disabled={!!errors.password || !!errors.repetirPassword}
             />
             {isLoading && (
-              <div className=" flex justify-center">
+              <div className="flex justify-center">
                 <img
                   src={loadingGif}
                   alt="loading_gif"
-                  className="h-[48px] w-[400px]  "
+                  className="h-[48px] w-[400px]"
                 />
               </div>
             )}

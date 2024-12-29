@@ -47,9 +47,9 @@ const ResultAcountView = () => {
     if (countdown === 0) {
       clearInterval(timer);
       if (isValidToken) {
-        navigate("/login");
+        navigate("/login", { replace: true });
       } else {
-        navigate("/registro");
+        navigate("/registro", { replace: true });
       }
     }
 
