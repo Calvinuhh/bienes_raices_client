@@ -18,7 +18,7 @@ const RegiserView = () => {
         <div className=" bg-white py-8 px-4 shadow rounded-lg">
           <RegisterForm />
           <NavBtn
-            enlaces={["/login", "/recuperar_contraseña"]}
+            enlaces={["/login", "/recuperar_password"]}
             textos={[
               "¿Ya tienes cuenta? Inicia Sesion",
               "Olvide mi Contraseña",

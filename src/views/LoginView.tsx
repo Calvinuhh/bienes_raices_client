@@ -18,7 +18,7 @@ const LoginView = () => {
         <div className=" bg-white py-8 px-4 shadow rounded-lg">
           <LoginForm />
           <NavBtn
-            enlaces={["/registro", "/recuperar_contraseña"]}
+            enlaces={["/registro", "/recuperar_password"]}
             textos={[
               "¿No tienes cuenta? Registrate",
               "Olvide mi Contraseña",

@@ -16,18 +16,17 @@ const ResultAcountView = () => {
     const verifyToken = async () => {
       if (token) {
         try {
-          const response = await axios(
-            `${import.meta.env.VITE_SERVER_URL}/auth/token/${token}`
+          const { data } = await axios(
+            `${import.meta.env.VITE_SERVER_URL}/auth/confirmacion/${token}`
           );
-          const { data } = response;
 
-          if (data) {
-            setIsValidToken(true);
-          } else {
-            setIsValidToken(false);
-          }
+          setIsValidToken(true);
+
+          await axios.patch(
+            `${import.meta.env.VITE_SERVER_URL}/auth/borrar_token`,
+            { token: data }
+          );
         } catch (error) {
-          console.error("Error verifying token:", error);
           setIsValidToken(false);
         }
       } else {

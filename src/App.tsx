@@ -4,6 +4,7 @@ import LoginView from "./views/LoginView";
 import RegiserView from "./views/RegisterView";
 import RecoverPasswordView from "./views/RecoverPasswordView";
 import ResultAcountView from "./views/ResultAcountView";
+import ChangePasswordForm from "./components/ChangePasswordForm";
 
 function App() {
   return (
@@ -14,12 +15,17 @@ function App() {
             <Route path="/login" element={<LoginView />} />
             <Route path="/registro" element={<RegiserView />} />
             <Route
-              path="/recuperar_contraseña"
+              path="/recuperar_password"
               element={<RecoverPasswordView />}
             />
           </Route>
 
           <Route path="/confirmacion/:token" element={<ResultAcountView />} />
+
+          <Route
+            path="/cambiar_password/:token"
+            element={<ChangePasswordForm />}
+          />
         </Routes>
       </BrowserRouter>
     </>
