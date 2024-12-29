@@ -134,7 +134,7 @@ const ChangePasswordForm = () => {
               value={password}
               onChange={handlePasswordChange}
               className="w-full py-2 px-3 border border-gray-300 rounded-lg placeholder-gray-400"
-              placeholder="Tu contraseña"
+              placeholder="Tu nueva contraseña"
             />
             {errors.password && (
               <div className="flex p-2 bg-red-500 h-[50px] items-center justify-center rounded-md">
@@ -156,7 +156,7 @@ const ChangePasswordForm = () => {
               value={repetirPassword}
               onChange={handleRepetirPasswordChange}
               className="w-full py-2 px-3 border border-gray-300 rounded-lg placeholder-gray-400"
-              placeholder="Repite tu contraseña"
+              placeholder="Repite tu nueva contraseña"
             />
             {errors.repetirPassword && (
               <div className="flex p-2 bg-red-500 h-[50px] items-center justify-center rounded-md">
