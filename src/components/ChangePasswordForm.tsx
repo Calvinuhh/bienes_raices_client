@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
-import loadingGif from "../../public/loading_gif.gif";
+import loadingGif from "/loading_gif.gif";
 
 const ChangePasswordForm = () => {
   const { token } = useParams();

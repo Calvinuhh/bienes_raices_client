@@ -1,13 +1,16 @@
 import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
-import loading_gif from "../../public/loading_gif.gif";
+import loading_gif from "/loading_gif.gif";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -35,6 +38,9 @@ const LoginForm = () => {
         {
           email,
           password,
+        },
+        {
+          withCredentials: true,
         }
       );
 
@@ -43,6 +49,7 @@ const LoginForm = () => {
         text: data,
         icon: "success",
       });
+      navigate("/mis_propiedades");
     } catch (error) {
       if (error instanceof AxiosError)
         Swal.fire({

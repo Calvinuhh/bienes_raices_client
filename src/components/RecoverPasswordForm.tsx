@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AxiosError } from "axios";
-import loadingGif from "../../public/loading_gif.gif";
+import loadingGif from "/loading_gif.gif";
 
 const RecoverPasswordForm = () => {
   const [email, setEmail] = useState("");
